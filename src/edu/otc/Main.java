@@ -1,6 +1,5 @@
 package edu.otc;
 
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -11,8 +10,8 @@ import java.util.Scanner;
 public class Main {
     static LinkedList<Ticket> ticketQueue = new LinkedList<>();
 
-    public static void main(String[] args) throws IOException {
-        boolean loopMenu = true;
+    public static void main(String[] args) {
+        boolean loopMenu;
         Scanner sc = new Scanner(System.in);
 
        do {
@@ -66,7 +65,7 @@ public class Main {
 
            System.out.println("Return to menu? y/n");
 
-           String displayPerm = "";
+           String displayPerm;
            do
            {
                displayPerm = sc.nextLine();

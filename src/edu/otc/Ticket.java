@@ -1,11 +1,12 @@
 package edu.otc;
 
 /**
+ * Class to contain the name of a person and the problem they are having as part of a queue system.
  * @author Daniel Wade
  */
 public class Ticket {
-    private String customerName;
-    private String problemDescription;
+    private final String customerName;
+    private final String problemDescription;
 
     /**
      * Constructor.
@@ -17,6 +18,13 @@ public class Ticket {
         this.problemDescription = problemDescription;
     }
 
+    /**
+     * @return Name of customer on ticket.
+     */
     public String getCustomer() {return customerName;}
+
+    /**
+     * @return Description of problem the ticket was opened for.
+     */
     public String getProblem() {return problemDescription;}
 }

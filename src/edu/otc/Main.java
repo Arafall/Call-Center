@@ -1,35 +1,89 @@
 package edu.otc;
 
+import java.io.IOException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 /**
  *
  * @author Daniel Wade
  */
 public class Main {
-    public static LinkedList<Ticket> ticketQueue = new LinkedList<>();
-    public static void main(String[] args) {
+    static LinkedList<Ticket> ticketQueue = new LinkedList<>();
 
-        enqueueTicket(new Ticket("Joe Miller", "First"));
-        enqueueTicket(new Ticket("Robert Patterson", "Second"));
-        enqueueTicket(new Ticket("Norman Javers", "Third"));
+    public static void main(String[] args) throws IOException {
+        boolean loopMenu = true;
+        Scanner sc = new Scanner(System.in);
 
-        displayTickets();
-        System.out.println();
+       do {
+           System.out.print("\033[H\033[2J");
+           System.out.flush();
+           showMenu();
+           System.out.print("Select an option: ");
 
-        dequeueTicket();
-        displayTickets();
-        System.out.println();
+           boolean menuInputLoop;
+           int option = -1;
+           int min = 0;
+           int max = 2;
+           do {
+               menuInputLoop = false;
 
-        dequeueTicket();
-        displayTickets();
-        System.out.println();
+               try {
+                   option = Integer.parseInt(sc.nextLine()) - 1;
+                   if (option < min || option > max) {
+                       System.out.println("Input outside selection range. (1 - 3)\nPlease try again.");
+                       menuInputLoop = true;
+                    }
+               } catch(NoSuchElementException | NumberFormatException e) {
+                   System.out.println("Invalid Input " + e.getMessage());
+                   menuInputLoop = true;
+               }
+           } while(menuInputLoop);
 
-        dequeueTicket();
-        displayTickets();
-        System.out.println();
+           System.out.println();
+           switch (option) {
+               // Open new ticket.
+               case 0:
+                   System.out.println("Enter your name.");
+                   String name = sc.nextLine();
+                   System.out.println("Describe the problem.");
+                   String description = sc.nextLine();
+                   enqueueTicket(new Ticket(name, description));
+                   System.out.printf("Ticket for %s created!\n", name);
+                   break;
+               // Close current ticket.
+               case 1:
+                   if (ticketQueue.headNode == null)
+                       System.out.println("No open tickets.");
+                   else
+                       System.out.printf("%s's ticket closed.\n", dequeueTicket().getCustomer());
+                   break;
+               // Display all tickets in queue.
+               case 2:
+                   displayTickets();
+                   break;
+           }
+
+           System.out.println("Return to menu? y/n");
+
+           String displayPerm = "";
+           do
+           {
+               displayPerm = sc.nextLine();
+               if (!displayPerm.equals("y") && !displayPerm.equals("n"))
+                   System.out.println("Invalid input.\nPlease enter 'y' or 'n'.");
+           }
+           while (!displayPerm.equals("y") && !displayPerm.equals("n"));
+           loopMenu = displayPerm.equals("y");
+       } while (loopMenu);
     }
 
     public static void showMenu() {
-
+        System.out.println("Ticketing System");
+        System.out.println("-----------------");
+        System.out.println("1 - Create Ticket");
+        System.out.println("2 - Close Ticket");
+        System.out.println("3 - Display All Open Tickets");
     }
 
     public static void enqueueTicket(Ticket ticket) {
@@ -43,16 +97,19 @@ public class Main {
     }
 
     public static void displayTickets() {
-        var headTicket = ticketQueue.headNode;
+        var headTicket = ticketQueue.get();
 
         if (headTicket == null) {
             System.out.println("Queue Empty");
             return;
         }
 
+        System.out.println("Open Tickets");
+        System.out.println("------------");
         while(headTicket != null) {
-            System.out.println(headTicket.data.getProblem());
-            headTicket = headTicket.next;
+            System.out.printf("Customer: %s\n", headTicket.data.getCustomer());
+            System.out.printf("Description: %s\n\n", headTicket.data.getProblem());
+            headTicket = headTicket.previous;
         }
 
     }

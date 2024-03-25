@@ -45,6 +45,8 @@ public class LinkedList<T> {
     }
 
     public LLNode<T> get() {
+        // Leave method when head is doesn't exist/list is empty.
+        if (headNode == null) return null;
 
         var head = headNode;
 

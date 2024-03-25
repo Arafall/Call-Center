@@ -5,7 +5,6 @@ package edu.otc;
  * @author Daniel Wade
  */
 public class LinkedList<T> {
-    private T t;
     // Latest node to be added into linked list.
     public LLNode<T> headNode = null;
 
@@ -16,7 +15,7 @@ public class LinkedList<T> {
      */
     public void add(T value) {
         // Instantiate new node.
-        LLNode<T> temp = new LLNode<T>(value);
+        LLNode<T> temp = new LLNode<>(value);
         // Assign its next node as the previous head.
         temp.next = headNode;
         if (headNode != null)

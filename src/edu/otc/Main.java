@@ -12,7 +12,20 @@ public class Main {
         enqueueTicket(new Ticket("Robert Patterson", "Second"));
         enqueueTicket(new Ticket("Norman Javers", "Third"));
 
+        displayTickets();
+        System.out.println();
 
+        dequeueTicket();
+        displayTickets();
+        System.out.println();
+
+        dequeueTicket();
+        displayTickets();
+        System.out.println();
+
+        dequeueTicket();
+        displayTickets();
+        System.out.println();
     }
 
     public static void showMenu() {
